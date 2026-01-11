@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.FinanceFlow" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:windowBackground">@color/black</item>
+
+        <item name="colorPrimary">@color/principal</item>
+        <item name="colorPrimaryVariant">@color/principal</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <item name="colorSecondary">@color/principal</item>
+        <item name="colorSecondaryVariant">@color/principal</item>
+        <item name="colorOnSecondary">@color/black</item>
+    </style>
+</resources>

@@ -1,0 +1,27 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.FinanceFlow" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:windowBackground">@color/background</item>
+
+        <item name="colorPrimary">@color/principal</item>
+        <item name="colorPrimaryVariant">@color/principal</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <item name="colorSecondary">@color/principal</item>
+        <item name="colorSecondaryVariant">@color/principal</item>
+        <item name="colorOnSecondary">@color/black</item>
+    </style>
+
+    <style name="Theme.FinanceFlow" parent="Base.Theme.FinanceFlow" />
+
+    <style name="Theme.FinanceFlow.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.FinanceFlow.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.FinanceFlow.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>
