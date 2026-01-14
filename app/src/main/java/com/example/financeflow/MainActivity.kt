@@ -2,7 +2,6 @@ package com.example.financeflow
 
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -14,15 +13,20 @@ import com.example.financeflow.databinding.ActivityMainBinding
 import com.example.financeflow.entity.Lancamento
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        const val FILTRO_TODOS = 0
+        const val FILTRO_RECEITAS = 1
+        const val FILTRO_DESPESAS = 2
+    }
+
     private lateinit var binding: ActivityMainBinding
     private lateinit var banco: DatabaseHandler
-    val cal: Calendar = Calendar.getInstance()
-    var dataSelecionada = System.currentTimeMillis()
+    private val cal: Calendar = Calendar.getInstance()
+    private var dataSelecionada = System.currentTimeMillis()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,16 +44,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         configCampoData()
-
+        binding.btVerLancamentos.setOnClickListener {
+            val intent = Intent(this, LancamentosActivity::class.java)
+            intent.putExtra("filtro", FILTRO_TODOS)
+            startActivity(intent)
+        }
         binding.fabListagem.setOnClickListener {
             val intent = Intent(this, LancamentosActivity::class.java)
+            intent.putExtra("filtro", FILTRO_TODOS)
             startActivity(intent)
         }
 
         binding.btLancamento.setOnClickListener { salvar() }
     }
 
-    fun salvar(){
+    private fun salvar() {
         if (binding.etDescricao.text.toString().isEmpty() ||
             binding.etValor.text.toString().isEmpty()
         ) {
@@ -64,10 +73,10 @@ class MainActivity : AppCompatActivity() {
             valor = binding.etValor.text.toString().toDouble(),
             data = dataSelecionada
         )
+
         banco.inserir(lancamento)
 
         Toast.makeText(this, "Lançamento realizado com sucesso!", Toast.LENGTH_SHORT).show()
-
         limparCampos()
     }
 
@@ -77,18 +86,12 @@ class MainActivity : AppCompatActivity() {
         binding.rbReceita.isChecked = true
         dataSelecionada = System.currentTimeMillis()
         setDataSelecionada()
-
         binding.etDescricao.requestFocus()
     }
 
-    fun configCampoData(){
-        val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-            cal.set(Calendar.YEAR, year)
-            cal.set(Calendar.MONTH, monthOfYear)
-            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-
+    private fun configCampoData() {
+        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
+            cal.set(year, month, day)
             dataSelecionada = cal.timeInMillis
             setDataSelecionada()
         }
@@ -97,16 +100,21 @@ class MainActivity : AppCompatActivity() {
 
         binding.etData.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                DatePickerDialog(this@MainActivity, dateSetListener,
+                DatePickerDialog(
+                    this,
+                    dateSetListener,
                     cal.get(Calendar.YEAR),
                     cal.get(Calendar.MONTH),
-                    cal.get(Calendar.DAY_OF_MONTH)).show()
+                    cal.get(Calendar.DAY_OF_MONTH)
+                ).show()
                 binding.etData.clearFocus()
             }
         }
     }
 
-    fun setDataSelecionada(){
-        binding.etData.setText(SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(dataSelecionada))
+    private fun setDataSelecionada() {
+        binding.etData.setText(
+            SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(dataSelecionada)
+        )
     }
 }

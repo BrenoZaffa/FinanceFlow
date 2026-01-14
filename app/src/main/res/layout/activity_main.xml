@@ -153,4 +153,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_list" />
 
+    <Button
+        android:id="@+id/btVerLancamentos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Ver lançamentos"
+        app:layout_constraintTop_toBottomOf="@id/btLancamento"
+        app:layout_constraintStart_toStartOf="@id/btLancamento"
+        app:layout_constraintEnd_toEndOf="@id/btLancamento"
+        android:layout_marginTop="8dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
