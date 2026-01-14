@@ -15,7 +15,7 @@ import com.example.financeflow.entity.Lancamento
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-
+import com.example.financeflow.utils.MoneyMask
 class MainActivity : AppCompatActivity() {
 
     companion object {
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         txtTopMessage = findViewById(R.id.txtTopMessage)
 
         banco = DatabaseHandler.getInstance(this)
-
+        binding.etValor.addTextChangedListener(MoneyMask(binding.etValor))
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -71,7 +71,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun salvar() {
         val descricao = binding.etDescricao.text?.toString()?.trim() ?: ""
-        val valorTexto = binding.etValor.text?.toString()?.trim() ?: ""
+        val valorTexto = binding.etValor.text?.toString()
+            ?.replace("[R$\\s.]".toRegex(), "")
+            ?.replace(",", ".")
+            ?.trim() ?: ""
 
         when {
             descricao.isEmpty() -> {
