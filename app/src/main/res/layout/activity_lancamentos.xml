@@ -5,22 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/txtSaldo"
+    <!-- Header -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Saldo: R$ 0,00"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/principal"
-        android:gravity="center_vertical"
-        android:padding="16dp"/>
+        android:orientation="vertical"
+        android:background="@color/principal"
+        android:padding="16dp">
 
+        <include
+            android:id="@+id/header"
+            layout="@layout/view_header" />
+
+        <!-- Saldo -->
+        <TextView
+            android:id="@+id/txtSaldo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="R$ 0,00"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Saldo atual"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:alpha="0.8"/>
+
+    </LinearLayout>
+
+    <!-- Divisor -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#DDDDDD"/>
 
+    <!-- Lista -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerLancamentos"
         android:layout_width="match_parent"

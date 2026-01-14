@@ -3,6 +3,7 @@ package com.example.financeflow.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.financeflow.R
 import com.example.financeflow.databinding.ItemLancamentoBinding
 import com.example.financeflow.entity.Lancamento
 import java.text.SimpleDateFormat
@@ -25,11 +26,18 @@ class LancamentoAdapter(private val lista: List<Lancamento>)
         val l = lista[position]
 
         holder.binding.txtDescricao.text = l.descricao
-        holder.binding.txtValor.text = if (l.tipo == 1)
-            "+ R$ %.2f".format(l.valor) else "- R$ %.2f".format(l.valor)
-
         holder.binding.txtData.text = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             .format(Date(l.data))
+
+        if (l.tipo == 1) { // Receita
+            holder.binding.txtValor.text = "+ R$ %.2f".format(l.valor)
+            holder.binding.txtValor.setTextColor(holder.itemView.context.getColor(R.color.green))
+            holder.binding.iconTipo.setImageResource(R.drawable.ic_arrow_up)
+        } else { // Despesa
+            holder.binding.txtValor.text = "- R$ %.2f".format(l.valor)
+            holder.binding.txtValor.setTextColor(holder.itemView.context.getColor(R.color.red))
+            holder.binding.iconTipo.setImageResource(R.drawable.ic_arrow_down)
+        }
     }
 
     override fun getItemCount() = lista.size

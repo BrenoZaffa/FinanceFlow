@@ -5,4 +5,5 @@
     <color name="background">#FFF3F4F6</color>
     <color name="principal">#FF4E4EFF</color>
     <color name="green">#FF008523</color>
+    <color name="red">#D32F2F</color>
 </resources>

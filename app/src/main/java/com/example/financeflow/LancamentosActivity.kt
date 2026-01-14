@@ -1,7 +1,10 @@
 package com.example.financeflow
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.financeflow.adapter.LancamentoAdapter
 import com.example.financeflow.database.DatabaseHandler
@@ -17,6 +20,20 @@ class LancamentosActivity : AppCompatActivity() {
 
         binding = ActivityLancamentosBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Ajusta o padding do topo para não ficar atrás da status bar
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(0, systemBars.top, 0, 0)
+            insets
+        }
+
+        // Configuração do Header reutilizável
+        binding.header.txtTitulo.text = "Resumo"
+        binding.header.btnVoltar.visibility = View.VISIBLE
+        binding.header.btnVoltar.setOnClickListener {
+            finish()
+        }
 
         banco = DatabaseHandler.getInstance(this)
 

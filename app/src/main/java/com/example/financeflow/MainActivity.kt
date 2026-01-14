@@ -3,6 +3,7 @@ package com.example.financeflow
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -35,6 +36,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 👉 AQUI entra a configuração do header
+        binding.header.txtTitulo.text = "Novo lançamento"
+        binding.header.btnVoltar.visibility = View.GONE
+
         banco = DatabaseHandler.getInstance(this)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -44,11 +49,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         configCampoData()
+
         binding.btVerLancamentos.setOnClickListener {
             val intent = Intent(this, LancamentosActivity::class.java)
             intent.putExtra("filtro", FILTRO_TODOS)
             startActivity(intent)
         }
+
         binding.fabListagem.setOnClickListener {
             val intent = Intent(this, LancamentosActivity::class.java)
             intent.putExtra("filtro", FILTRO_TODOS)
@@ -57,7 +64,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.btLancamento.setOnClickListener { salvar() }
     }
-
     private fun salvar() {
         if (binding.etDescricao.text.toString().isEmpty() ||
             binding.etValor.text.toString().isEmpty()
