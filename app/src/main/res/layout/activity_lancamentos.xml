@@ -37,7 +37,35 @@
             android:alpha="0.8"/>
 
     </LinearLayout>
+    <!-- Filtros -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="8dp">
 
+        <Button
+            android:id="@+id/btnFiltroTodos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Todos"/>
+
+        <Button
+            android:id="@+id/btnFiltroReceitas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Receitas"
+            android:layout_marginStart="8dp"/>
+
+        <Button
+            android:id="@+id/btnFiltroDespesas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Despesas"
+            android:layout_marginStart="8dp"/>
+
+    </LinearLayout>
     <!-- Divisor -->
     <View
         android:layout_width="match_parent"

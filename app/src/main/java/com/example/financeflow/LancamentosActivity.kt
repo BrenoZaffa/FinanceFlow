@@ -12,8 +12,15 @@ import com.example.financeflow.databinding.ActivityLancamentosBinding
 
 class LancamentosActivity : AppCompatActivity() {
 
+    companion object {
+        const val FILTRO_TODOS = 0
+        const val FILTRO_RECEITAS = 1
+        const val FILTRO_DESPESAS = 2
+    }
+
     private lateinit var binding: ActivityLancamentosBinding
     private lateinit var banco: DatabaseHandler
+    private var filtroAtual = FILTRO_TODOS
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,20 +35,29 @@ class LancamentosActivity : AppCompatActivity() {
             insets
         }
 
-        // Configuração do Header reutilizável
+        // Header
         binding.header.txtTitulo.text = "Resumo"
         binding.header.btnVoltar.visibility = View.VISIBLE
-        binding.header.btnVoltar.setOnClickListener {
-            finish()
-        }
+        binding.header.btnVoltar.setOnClickListener { finish() }
 
         banco = DatabaseHandler.getInstance(this)
 
-        carregarLancamentos()
+        // Botões de filtro (precisam existir no layout)
+        binding.btnFiltroTodos.setOnClickListener { aplicarFiltro(FILTRO_TODOS) }
+        binding.btnFiltroReceitas.setOnClickListener { aplicarFiltro(FILTRO_RECEITAS) }
+        binding.btnFiltroDespesas.setOnClickListener { aplicarFiltro(FILTRO_DESPESAS) }
+
+        aplicarFiltro(FILTRO_TODOS)
     }
 
-    private fun carregarLancamentos() {
-        val lista = banco.listarTodos()
+    private fun aplicarFiltro(filtro: Int) {
+        filtroAtual = filtro
+
+        val lista = when (filtro) {
+            FILTRO_RECEITAS -> banco.listarTodos().filter { it.tipo == 1 }
+            FILTRO_DESPESAS -> banco.listarTodos().filter { it.tipo == 2 }
+            else -> banco.listarTodos()
+        }
 
         binding.recyclerLancamentos.layoutManager = LinearLayoutManager(this)
         binding.recyclerLancamentos.adapter = LancamentoAdapter(lista)
