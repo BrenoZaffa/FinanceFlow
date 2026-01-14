@@ -43,14 +43,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Header
         binding.header.txtTitulo.text = "Novo lançamento"
         binding.header.btnVoltar.visibility = View.GONE
 
+        // Mensagem topo
         topMessage = findViewById(R.id.topMessage)
         txtTopMessage = findViewById(R.id.txtTopMessage)
 
         banco = DatabaseHandler.getInstance(this)
 
+        // Máscara monetária
         binding.formLancamento.etValor.addTextChangedListener(
             MoneyMask(binding.formLancamento.etValor)
         )
@@ -75,24 +78,34 @@ class MainActivity : AppCompatActivity() {
         binding.btLancamento.setOnClickListener { salvar() }
     }
 
-    private fun configurarDatePicker() {
-        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
-            cal.set(year, month, day)
-            dataSelecionada = cal.timeInMillis
-            atualizarDataNoCampo()
-        }
+    /* =======================
+     * DatePicker
+     * ======================= */
 
+    private fun configurarDatePicker() {
         atualizarDataNoCampo()
 
         binding.formLancamento.etData.setOnClickListener {
-            DatePickerDialog(
-                this,
-                dateSetListener,
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)
-            ).show()
+            abrirDatePicker()
         }
+
+        binding.formLancamento.textInputData.setEndIconOnClickListener {
+            abrirDatePicker()
+        }
+    }
+
+    private fun abrirDatePicker() {
+        DatePickerDialog(
+            this,
+            { _, year, month, day ->
+                cal.set(year, month, day)
+                dataSelecionada = cal.timeInMillis
+                atualizarDataNoCampo()
+            },
+            cal.get(Calendar.YEAR),
+            cal.get(Calendar.MONTH),
+            cal.get(Calendar.DAY_OF_MONTH)
+        ).show()
     }
 
     private fun atualizarDataNoCampo() {
@@ -100,6 +113,10 @@ class MainActivity : AppCompatActivity() {
             SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(dataSelecionada)
         )
     }
+
+    /* =======================
+     * Salvar lançamento
+     * ======================= */
 
     private fun salvar() {
         val descricao = binding.formLancamento.etDescricao.text?.toString()?.trim() ?: ""
@@ -160,14 +177,22 @@ class MainActivity : AppCompatActivity() {
         binding.formLancamento.etDescricao.requestFocus()
     }
 
+    /* =======================
+     * Últimos lançamentos
+     * ======================= */
+
     private fun carregarUltimos() {
         val ultimos = banco.listarTodos()
             .sortedByDescending { it.data }
-            .take(5)
+            .take(3)
 
         binding.recyclerUltimos.layoutManager = LinearLayoutManager(this)
         binding.recyclerUltimos.adapter = LancamentoAdapter(ultimos)
     }
+
+    /* =======================
+     * Mensagens topo
+     * ======================= */
 
     private fun mostrarMensagemTopo(mensagem: String, cor: Int) {
         txtTopMessage.text = mensagem
