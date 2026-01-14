@@ -4,7 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -26,6 +26,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var banco: DatabaseHandler
+
+    private lateinit var topMessage: View
+    private lateinit var txtTopMessage: TextView
+
     private val cal: Calendar = Calendar.getInstance()
     private var dataSelecionada = System.currentTimeMillis()
 
@@ -36,9 +40,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 👉 AQUI entra a configuração do header
+        // Header
         binding.header.txtTitulo.text = "Novo lançamento"
         binding.header.btnVoltar.visibility = View.GONE
+
+        // Mensagem topo
+        topMessage = findViewById(R.id.topMessage)
+        txtTopMessage = findViewById(R.id.txtTopMessage)
 
         banco = DatabaseHandler.getInstance(this)
 
@@ -51,39 +59,61 @@ class MainActivity : AppCompatActivity() {
         configCampoData()
 
         binding.btVerLancamentos.setOnClickListener {
-            val intent = Intent(this, LancamentosActivity::class.java)
-            intent.putExtra("filtro", FILTRO_TODOS)
-            startActivity(intent)
+            startActivity(Intent(this, LancamentosActivity::class.java))
         }
 
         binding.fabListagem.setOnClickListener {
-            val intent = Intent(this, LancamentosActivity::class.java)
-            intent.putExtra("filtro", FILTRO_TODOS)
-            startActivity(intent)
+            startActivity(Intent(this, LancamentosActivity::class.java))
         }
 
         binding.btLancamento.setOnClickListener { salvar() }
     }
+
     private fun salvar() {
-        if (binding.etDescricao.text.toString().isEmpty() ||
-            binding.etValor.text.toString().isEmpty()
-        ) {
-            Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
+        val descricao = binding.etDescricao.text?.toString()?.trim() ?: ""
+        val valorTexto = binding.etValor.text?.toString()?.trim() ?: ""
+
+        when {
+            descricao.isEmpty() -> {
+                binding.etDescricao.error = "Informe a descrição"
+                binding.etDescricao.requestFocus()
+                mostrarErro("Preencha a descrição")
+                return
+            }
+
+            valorTexto.isEmpty() -> {
+                binding.etValor.error = "Informe o valor"
+                binding.etValor.requestFocus()
+                mostrarErro("Preencha o valor")
+                return
+            }
+        }
+
+        val valor = valorTexto.toDoubleOrNull()
+        if (valor == null || valor <= 0) {
+            binding.etValor.error = "Valor inválido"
+            binding.etValor.requestFocus()
+            mostrarErro("Informe um valor válido")
             return
         }
 
         val lancamento = Lancamento(
             _id = 0,
-            descricao = binding.etDescricao.text.toString(),
-            tipo = if (binding.rbReceita.isChecked) 1 else 2,
-            valor = binding.etValor.text.toString().toDouble(),
+            descricao = descricao,
+            tipo = if (binding.rbReceita.isChecked) FILTRO_RECEITAS else FILTRO_DESPESAS,
+            valor = valor,
             data = dataSelecionada
         )
 
-        banco.inserir(lancamento)
+        try {
+            banco.inserir(lancamento)
+            limparCampos()
+            mostrarSucesso("Lançamento salvo com sucesso")
 
-        Toast.makeText(this, "Lançamento realizado com sucesso!", Toast.LENGTH_SHORT).show()
-        limparCampos()
+        } catch (e: Exception) {
+            mostrarErro("Erro ao salvar lançamento")
+            e.printStackTrace()
+        }
     }
 
     private fun limparCampos() {
@@ -122,5 +152,49 @@ class MainActivity : AppCompatActivity() {
         binding.etData.setText(
             SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(dataSelecionada)
         )
+    }
+
+    /* =======================
+     * Mensagens topo
+     * ======================= */
+
+    private fun mostrarMensagemTopo(mensagem: String, cor: Int) {
+        txtTopMessage.text = mensagem
+        topMessage.setBackgroundColor(getColor(cor))
+
+        topMessage.animate()
+            .translationY(0f)
+            .alpha(1f)
+            .setDuration(250)
+            .start()
+
+        topMessage.postDelayed({
+            topMessage.animate()
+                .translationY(-topMessage.height.toFloat())
+                .alpha(0f)
+                .setDuration(250)
+                .start()
+        }, 2500)
+    }
+
+    private fun mostrarErro(mensagem: String) {
+        mostrarMensagemTopo(mensagem, R.color.red)
+    }
+
+    private fun mostrarSucesso(mensagem: String) {
+        mostrarMensagemTopo(mensagem, R.color.green)
+
+        binding.btLancamento.animate()
+            .scaleX(1.05f)
+            .scaleY(1.05f)
+            .setDuration(120)
+            .withEndAction {
+                binding.btLancamento.animate()
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .setDuration(120)
+                    .start()
+            }
+            .start()
     }
 }
