@@ -63,6 +63,7 @@ class LancamentosActivity : AppCompatActivity() {
         binding.recyclerLancamentos.adapter = LancamentoAdapter(lista)
 
         atualizarSaldo(lista)
+        atualizarEstiloFiltro()
     }
 
     private fun atualizarSaldo(lista: List<com.example.financeflow.entity.Lancamento>) {
@@ -73,4 +74,10 @@ class LancamentosActivity : AppCompatActivity() {
 
         binding.txtSaldo.text = "Saldo: R$ %.2f".format(saldo)
     }
+    private fun atualizarEstiloFiltro() {
+        binding.btnFiltroTodos.alpha = if (filtroAtual == FILTRO_TODOS) 1f else 0.4f
+        binding.btnFiltroReceitas.alpha = if (filtroAtual == FILTRO_RECEITAS) 1f else 0.4f
+        binding.btnFiltroDespesas.alpha = if (filtroAtual == FILTRO_DESPESAS) 1f else 0.4f
+    }
+
 }
