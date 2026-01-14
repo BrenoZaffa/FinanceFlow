@@ -137,17 +137,14 @@ class MainActivity : AppCompatActivity() {
 
         setDataSelecionada()
 
-        binding.etData.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                DatePickerDialog(
-                    this,
-                    dateSetListener,
-                    cal.get(Calendar.YEAR),
-                    cal.get(Calendar.MONTH),
-                    cal.get(Calendar.DAY_OF_MONTH)
-                ).show()
-                binding.etData.clearFocus()
-            }
+        binding.etData.setOnClickListener {
+            DatePickerDialog(
+                this,
+                dateSetListener,
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)
+            ).show()
         }
     }
 
