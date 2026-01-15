@@ -22,7 +22,6 @@
             android:layout_height="wrap_content">
 
             <!-- CARD: Desenvolvedores -->
-            <!-- CARD: Desenvolvedores -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardDevs"
                 android:layout_width="match_parent"
@@ -37,6 +36,7 @@
                     android:layout_height="wrap_content"
                     android:padding="16dp">
 
+                    <!-- Título -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -49,49 +49,126 @@
                             android:layout_height="22dp"
                             android:src="@drawable/ic_people"
                             app:tint="@color/principal"
-
                             android:layout_marginEnd="8dp"/>
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/desenvolvedores"
                             android:textStyle="bold"
                             android:textSize="18sp"/>
                     </LinearLayout>
 
+                    <!-- Breno -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="• Breno Zaffalon"
-                        android:textStyle="bold"/>
+                        android:text="Breno Zaffalon"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="4dp"/>
 
-                    <TextView
+                    <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="WhatsApp: +55 42 9826-2655"/>
+                        android:gravity="center_vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="GitHub: github.com/BrenoZaffa"
-                        android:layout_marginBottom="8dp"/>
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_whatsapp"
+                            app:tint="@color/green"
+                            android:layout_marginEnd="6dp"/>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="• Cleverson Ramos"
-                        android:textStyle="bold"/>
+                        <TextView
+                            android:id="@+id/whatsBreno"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="+55 42 9826-2655"
+                            android:textColor="@color/principal"
+                            android:clickable="true"
+                            android:focusable="true"/>
+                    </LinearLayout>
 
-                    <TextView
+                    <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="WhatsApp: +55 43 99663-1215"/>
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
 
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_github"
+                            app:tint="@color/black"
+                            android:layout_marginEnd="6dp"/>
+
+                        <TextView
+                            android:id="@+id/gitBreno"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="github.com/BrenoZaffa"
+                            android:textColor="@color/principal"
+                            android:clickable="true"
+                            android:focusable="true"/>
+                    </LinearLayout>
+
+                    <!-- Cleverson -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="GitHub: github.com/cleverson-tiago-ramos"/>
+                        android:text="Cleverson Ramos"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="4dp"/>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_whatsapp"
+                            app:tint="@color/green"
+                            android:layout_marginEnd="6dp"/>
+
+                        <TextView
+                            android:id="@+id/whatsCleverson"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="+55 43 99663-1215"
+                            android:textColor="@color/principal"
+                            android:clickable="true"
+                            android:focusable="true"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_github"
+                            app:tint="@color/black"
+                            android:layout_marginEnd="6dp"/>
+
+                        <TextView
+                            android:id="@+id/gitCleverson"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="github.com/cleverson-tiago-ramos"
+                            android:textColor="@color/principal"
+                            android:clickable="true"
+                            android:focusable="true"/>
+                    </LinearLayout>
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
