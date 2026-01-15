@@ -3,6 +3,8 @@ package com.example.financeflow
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -71,8 +73,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, LancamentosActivity::class.java))
         }
 
-        binding.fabListagem.setOnClickListener {
-            startActivity(Intent(this, LancamentosActivity::class.java))
+        binding.sobreDevs.setOnClickListener {
+            startActivity(Intent(this, SobreActivity::class.java))
         }
 
         binding.btLancamento.setOnClickListener { salvar() }
@@ -215,4 +217,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun mostrarErro(mensagem: String) = mostrarMensagemTopo(mensagem, R.color.red)
     private fun mostrarSucesso(mensagem: String) = mostrarMensagemTopo(mensagem, R.color.green)
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_lancamentos, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_sobre -> {
+                startActivity(Intent(this, SobreActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 }

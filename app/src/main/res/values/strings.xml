@@ -6,4 +6,8 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="btnVoltar">Voltar</string>
+    <string name="desenvolvedores">Desenvolvedores</string>
+    <string name="breno_zaffalon_nwhatsapp_55_42_9826_2655_ngithub_github_com_brenozaffa_n">• Breno Zaffalon\nWhatsApp: +55 42 9826-2655\nGitHub: github.com/BrenoZaffa\n</string>
+    <string name="cleverson_ramos_nwhatsapp_55_43_99663_1215_ngithub_github_com_cleverson_tiago_ramos_n">• Cleverson Ramos\nWhatsApp: +55 43 99663-1215\nGitHub: github.com/cleverson-tiago-ramos\n</string>
+    <string name="trabalho_final_android_aplicado_ntrabalho_em_dupla_n_ncurso_de_p_s_gradua_o_em_dispositivos_m_veis_utfpr_campus_pato_branco_n_nobjetivo_desenvolver_um_aplicativo_nativo_android_em_kotlin_para_controle_financeiro_permitindo_registrar_entradas_e_sa_das_visualizar_hist_rico_e_persistir_dados_localmente_aplicando_boas_pr_ticas_de_arquitetura_como_mvc_ou_mvvm">Trabalho Final: Android Aplicado\nTrabalho em dupla\n\nCurso de Pós-Graduação em Dispositivos Móveis - UTFPR Campus Pato Branco\n\nObjetivo: Desenvolver um aplicativo nativo Android em Kotlin para controle financeiro, permitindo registrar entradas e saídas, visualizar histórico e persistir dados localmente, aplicando boas práticas de arquitetura como MVC ou MVVM.</string>
 </resources>

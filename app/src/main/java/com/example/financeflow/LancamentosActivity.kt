@@ -112,4 +112,5 @@ class LancamentosActivity : AppCompatActivity() {
         return getSharedPreferences(PREFS, MODE_PRIVATE)
             .getInt(KEY_FILTRO, FILTRO_TODOS)
     }
+
 }

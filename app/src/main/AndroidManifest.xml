@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinanceFlow">
         <activity
+            android:name=".SobreActivity"
+            android:exported="false"/>
+        <activity
             android:name=".LancamentosActivity"
             android:exported="false" />
         <activity
