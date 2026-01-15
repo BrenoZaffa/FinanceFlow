@@ -17,11 +17,7 @@
         <activity
             android:name=".LancamentosActivity"
             android:exported="false" />
-        <activity
-            android:name=".lancamentosActivity"
-            android:exported="false"
-            android:label="@string/title_activity_lancamentos"
-            android:theme="@style/Theme.FinanceFlow.NoActionBar" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
